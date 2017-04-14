@@ -19,7 +19,12 @@
             "nom": "Nom",
             "prenom": "Prenom",
             "genre": "Genre",
-            "fonction": "Fonction"
+            "fonction": "Fonction",
+            "dateNaissance": "Date Naissance",
+            "adresse": "Adresse",
+            "lieuNaissance": "Lieu Naissance",
+            "pere": "Pere",
+            "mere": "Mere"
         }
     }
 }

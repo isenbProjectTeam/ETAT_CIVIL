@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import com.csgb.etatcivil.domain.enumeration.Genre;
@@ -41,6 +42,24 @@ public class Personne implements Serializable {
 
     @Column(name = "fonction")
     private String fonction;
+
+    @NotNull
+    @Column(name = "date_naissance", nullable = false)
+    private ZonedDateTime dateNaissance;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private Adresse adresse;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private Ville lieuNaissance;
+
+    @ManyToOne
+    private Personne pere;
+
+    @ManyToOne
+    private Personne mere;
 
     public Long getId() {
         return id;
@@ -102,6 +121,71 @@ public class Personne implements Serializable {
         this.fonction = fonction;
     }
 
+    public ZonedDateTime getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public Personne dateNaissance(ZonedDateTime dateNaissance) {
+        this.dateNaissance = dateNaissance;
+        return this;
+    }
+
+    public void setDateNaissance(ZonedDateTime dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public Personne adresse(Adresse adresse) {
+        this.adresse = adresse;
+        return this;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
+    public Ville getLieuNaissance() {
+        return lieuNaissance;
+    }
+
+    public Personne lieuNaissance(Ville ville) {
+        this.lieuNaissance = ville;
+        return this;
+    }
+
+    public void setLieuNaissance(Ville ville) {
+        this.lieuNaissance = ville;
+    }
+
+    public Personne getPere() {
+        return pere;
+    }
+
+    public Personne pere(Personne personne) {
+        this.pere = personne;
+        return this;
+    }
+
+    public void setPere(Personne personne) {
+        this.pere = personne;
+    }
+
+    public Personne getMere() {
+        return mere;
+    }
+
+    public Personne mere(Personne personne) {
+        this.mere = personne;
+        return this;
+    }
+
+    public void setMere(Personne personne) {
+        this.mere = personne;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -130,6 +214,7 @@ public class Personne implements Serializable {
             ", prenom='" + prenom + "'" +
             ", genre='" + genre + "'" +
             ", fonction='" + fonction + "'" +
+            ", dateNaissance='" + dateNaissance + "'" +
             '}';
     }
 }

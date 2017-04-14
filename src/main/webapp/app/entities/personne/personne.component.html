@@ -34,6 +34,11 @@
             <th jhiSortBy="prenom"><span jhiTranslate="etatCivilApp.personne.prenom">Prenom</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="genre"><span jhiTranslate="etatCivilApp.personne.genre">Genre</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="fonction"><span jhiTranslate="etatCivilApp.personne.fonction">Fonction</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dateNaissance"><span jhiTranslate="etatCivilApp.personne.dateNaissance">Date Naissance</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="adresse.rue"><span jhiTranslate="etatCivilApp.personne.adresse">Adresse</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lieuNaissance.nom"><span jhiTranslate="etatCivilApp.personne.lieuNaissance">Lieu Naissance</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pere.nom"><span jhiTranslate="etatCivilApp.personne.pere">Pere</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="mere.nom"><span jhiTranslate="etatCivilApp.personne.mere">Mere</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -44,6 +49,27 @@
                 <td>{{personne.prenom}}</td>
                 <td jhiTranslate="{{'etatCivilApp.Genre.' + personne.genre}}">{{personne.genre}}</td>
                 <td>{{personne.fonction}}</td>
+                <td>{{personne.dateNaissance | date:'medium'}}</td>
+                <td>
+                    <div *ngIf="personne.adresse">
+                        <a [routerLink]="['../adresse', personne.adresse?.id ]" >{{personne.adresse?.rue}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="personne.lieuNaissance">
+                        <a [routerLink]="['../ville', personne.lieuNaissance?.id ]" >{{personne.lieuNaissance?.nom}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="personne.pere">
+                        <a [routerLink]="['../personne', personne.pere?.id ]" >{{personne.pere?.nom}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="personne.mere">
+                        <a [routerLink]="['../personne', personne.mere?.id ]" >{{personne.mere?.nom}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

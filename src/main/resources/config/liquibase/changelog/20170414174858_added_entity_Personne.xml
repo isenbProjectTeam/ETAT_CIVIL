@@ -38,8 +38,29 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="date_naissance" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="adresse_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="lieu_naissance_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pere_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mere_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="personne" columnName="date_naissance" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

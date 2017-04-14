@@ -8,6 +8,8 @@ import { EventManager, AlertService, JhiLanguageService } from 'ng-jhipster';
 import { Personne } from './personne.model';
 import { PersonnePopupService } from './personne-popup.service';
 import { PersonneService } from './personne.service';
+import { Adresse, AdresseService } from '../adresse';
+import { Ville, VilleService } from '../ville';
 
 @Component({
     selector: 'jhi-personne-dialog',
@@ -18,11 +20,19 @@ export class PersonneDialogComponent implements OnInit {
     personne: Personne;
     authorities: any[];
     isSaving: boolean;
+
+    adresses: Adresse[];
+
+    villes: Ville[];
+
+    personnes: Personne[];
     constructor(
         public activeModal: NgbActiveModal,
         private jhiLanguageService: JhiLanguageService,
         private alertService: AlertService,
         private personneService: PersonneService,
+        private adresseService: AdresseService,
+        private villeService: VilleService,
         private eventManager: EventManager
     ) {
         this.jhiLanguageService.setLocations(['personne', 'genre']);
@@ -31,6 +41,12 @@ export class PersonneDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        this.adresseService.query().subscribe(
+            (res: Response) => { this.adresses = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.villeService.query().subscribe(
+            (res: Response) => { this.villes = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.personneService.query().subscribe(
+            (res: Response) => { this.personnes = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -67,6 +83,18 @@ export class PersonneDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    trackAdresseById(index: number, item: Adresse) {
+        return item.id;
+    }
+
+    trackVilleById(index: number, item: Ville) {
+        return item.id;
+    }
+
+    trackPersonneById(index: number, item: Personne) {
+        return item.id;
     }
 }
 

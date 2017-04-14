@@ -1,6 +1,37 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipName": "adresse",
+            "otherEntityName": "adresse",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "rue"
+        },
+        {
+            "relationshipName": "lieuNaissance",
+            "otherEntityName": "ville",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nom"
+        },
+        {
+            "relationshipName": "pere",
+            "otherEntityName": "personne",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nom"
+        },
+        {
+            "relationshipName": "mere",
+            "otherEntityName": "personne",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nom"
+        }
+    ],
     "fields": [
         {
             "fieldName": "nom",
@@ -27,6 +58,13 @@
         {
             "fieldName": "fonction",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "dateNaissance",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20170414174858",

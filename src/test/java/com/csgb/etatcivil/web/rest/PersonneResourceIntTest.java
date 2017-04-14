@@ -3,6 +3,8 @@ package com.csgb.etatcivil.web.rest;
 import com.csgb.etatcivil.EtatCivilApp;
 
 import com.csgb.etatcivil.domain.Personne;
+import com.csgb.etatcivil.domain.Adresse;
+import com.csgb.etatcivil.domain.Ville;
 import com.csgb.etatcivil.repository.PersonneRepository;
 import com.csgb.etatcivil.service.PersonneService;
 import com.csgb.etatcivil.repository.search.PersonneSearchRepository;
@@ -23,8 +25,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
+import static com.csgb.etatcivil.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -51,6 +58,9 @@ public class PersonneResourceIntTest {
 
     private static final String DEFAULT_FONCTION = "AAAAAAAAAA";
     private static final String UPDATED_FONCTION = "BBBBBBBBBB";
+
+    private static final ZonedDateTime DEFAULT_DATE_NAISSANCE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_DATE_NAISSANCE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
     private PersonneRepository personneRepository;
@@ -98,7 +108,18 @@ public class PersonneResourceIntTest {
             .nom(DEFAULT_NOM)
             .prenom(DEFAULT_PRENOM)
             .genre(DEFAULT_GENRE)
-            .fonction(DEFAULT_FONCTION);
+            .fonction(DEFAULT_FONCTION)
+            .dateNaissance(DEFAULT_DATE_NAISSANCE);
+        // Add required entity
+        Adresse adresse = AdresseResourceIntTest.createEntity(em);
+        em.persist(adresse);
+        em.flush();
+        personne.setAdresse(adresse);
+        // Add required entity
+        Ville lieuNaissance = VilleResourceIntTest.createEntity(em);
+        em.persist(lieuNaissance);
+        em.flush();
+        personne.setLieuNaissance(lieuNaissance);
         return personne;
     }
 
@@ -127,6 +148,7 @@ public class PersonneResourceIntTest {
         assertThat(testPersonne.getPrenom()).isEqualTo(DEFAULT_PRENOM);
         assertThat(testPersonne.getGenre()).isEqualTo(DEFAULT_GENRE);
         assertThat(testPersonne.getFonction()).isEqualTo(DEFAULT_FONCTION);
+        assertThat(testPersonne.getDateNaissance()).isEqualTo(DEFAULT_DATE_NAISSANCE);
 
         // Validate the Personne in Elasticsearch
         Personne personneEs = personneSearchRepository.findOne(testPersonne.getId());
@@ -208,6 +230,24 @@ public class PersonneResourceIntTest {
 
     @Test
     @Transactional
+    public void checkDateNaissanceIsRequired() throws Exception {
+        int databaseSizeBeforeTest = personneRepository.findAll().size();
+        // set the field null
+        personne.setDateNaissance(null);
+
+        // Create the Personne, which fails.
+
+        restPersonneMockMvc.perform(post("/api/personnes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(personne)))
+            .andExpect(status().isBadRequest());
+
+        List<Personne> personneList = personneRepository.findAll();
+        assertThat(personneList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPersonnes() throws Exception {
         // Initialize the database
         personneRepository.saveAndFlush(personne);
@@ -220,7 +260,8 @@ public class PersonneResourceIntTest {
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM.toString())))
             .andExpect(jsonPath("$.[*].prenom").value(hasItem(DEFAULT_PRENOM.toString())))
             .andExpect(jsonPath("$.[*].genre").value(hasItem(DEFAULT_GENRE.toString())))
-            .andExpect(jsonPath("$.[*].fonction").value(hasItem(DEFAULT_FONCTION.toString())));
+            .andExpect(jsonPath("$.[*].fonction").value(hasItem(DEFAULT_FONCTION.toString())))
+            .andExpect(jsonPath("$.[*].dateNaissance").value(hasItem(sameInstant(DEFAULT_DATE_NAISSANCE))));
     }
 
     @Test
@@ -237,7 +278,8 @@ public class PersonneResourceIntTest {
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM.toString()))
             .andExpect(jsonPath("$.prenom").value(DEFAULT_PRENOM.toString()))
             .andExpect(jsonPath("$.genre").value(DEFAULT_GENRE.toString()))
-            .andExpect(jsonPath("$.fonction").value(DEFAULT_FONCTION.toString()));
+            .andExpect(jsonPath("$.fonction").value(DEFAULT_FONCTION.toString()))
+            .andExpect(jsonPath("$.dateNaissance").value(sameInstant(DEFAULT_DATE_NAISSANCE)));
     }
 
     @Test
@@ -262,7 +304,8 @@ public class PersonneResourceIntTest {
             .nom(UPDATED_NOM)
             .prenom(UPDATED_PRENOM)
             .genre(UPDATED_GENRE)
-            .fonction(UPDATED_FONCTION);
+            .fonction(UPDATED_FONCTION)
+            .dateNaissance(UPDATED_DATE_NAISSANCE);
 
         restPersonneMockMvc.perform(put("/api/personnes")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -277,6 +320,7 @@ public class PersonneResourceIntTest {
         assertThat(testPersonne.getPrenom()).isEqualTo(UPDATED_PRENOM);
         assertThat(testPersonne.getGenre()).isEqualTo(UPDATED_GENRE);
         assertThat(testPersonne.getFonction()).isEqualTo(UPDATED_FONCTION);
+        assertThat(testPersonne.getDateNaissance()).isEqualTo(UPDATED_DATE_NAISSANCE);
 
         // Validate the Personne in Elasticsearch
         Personne personneEs = personneSearchRepository.findOne(testPersonne.getId());
@@ -337,7 +381,8 @@ public class PersonneResourceIntTest {
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM.toString())))
             .andExpect(jsonPath("$.[*].prenom").value(hasItem(DEFAULT_PRENOM.toString())))
             .andExpect(jsonPath("$.[*].genre").value(hasItem(DEFAULT_GENRE.toString())))
-            .andExpect(jsonPath("$.[*].fonction").value(hasItem(DEFAULT_FONCTION.toString())));
+            .andExpect(jsonPath("$.[*].fonction").value(hasItem(DEFAULT_FONCTION.toString())))
+            .andExpect(jsonPath("$.[*].dateNaissance").value(hasItem(sameInstant(DEFAULT_DATE_NAISSANCE))));
     }
 
     @Test
