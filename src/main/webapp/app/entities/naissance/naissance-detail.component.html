@@ -1,0 +1,61 @@
+
+<div *ngIf="naissance">
+    <h2><span jhiTranslate="etatCivilApp.naissance.detail.title">Naissance</span> {{naissance.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="etatCivilApp.naissance.numeroRegistre">Numero Registre</span></dt>
+        <dd>
+            <span>{{naissance.numeroRegistre}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.mentionMarginale">Mention Marginale</span></dt>
+        <dd>
+            <span>{{naissance.mentionMarginale}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.dateDeclaration">Date Declaration</span></dt>
+        <dd>
+            <span>{{naissance.dateDeclaration | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.pere">Pere</span></dt>
+        <dd>
+            <div *ngIf="naissance.pere">
+                <a [routerLink]="['/personne', naissance.pere?.id]">{{naissance.pere?.prenom}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.mere">Mere</span></dt>
+        <dd>
+            <div *ngIf="naissance.mere">
+                <a [routerLink]="['/personne', naissance.mere?.id]">{{naissance.mere?.prenom}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.enfant">Enfant</span></dt>
+        <dd>
+            <div *ngIf="naissance.enfant">
+                <a [routerLink]="['/personne', naissance.enfant?.id]">{{naissance.enfant?.prenom}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.agentDeclarant">Agent Declarant</span></dt>
+        <dd>
+            {{naissance.agentDeclarant?.login}}
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.naissance.lieuDeclaration">Lieu Declaration</span></dt>
+        <dd>
+            <div *ngIf="naissance.lieuDeclaration">
+                <a [routerLink]="['/ville', naissance.lieuDeclaration?.id]">{{naissance.lieuDeclaration?.nom}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'naissance/'+ naissance.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

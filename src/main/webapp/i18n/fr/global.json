@@ -11,6 +11,9 @@
                 "ville": "Ville",
                 "adresse": "Adresse",
                 "personne": "Personne",
+                "naissance": "Naissance",
+                "pieceJointe": "Piece Jointe",
+                "registreNaissance": "Registre Naissance",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

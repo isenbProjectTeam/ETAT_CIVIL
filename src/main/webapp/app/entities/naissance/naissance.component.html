@@ -1,0 +1,101 @@
+<div>
+    <h2>
+        <span jhiTranslate="etatCivilApp.naissance.home.title">Naissances</span>
+        <button class="btn btn-primary float-right create-naissance" [routerLink]="['/', { outlets: { popup: ['naissance-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span class="hidden-sm-down"  jhiTranslate="etatCivilApp.naissance.home.createLabel">
+            Create new Naissance
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12 no-padding-right">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'etatCivilApp.naissance.home.search' | translate }}">
+                    <button class="input-group-addon btn btn-info" (click)="search(currentSearch)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="input-group-addon btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="naissances">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="numeroRegistre"><span jhiTranslate="etatCivilApp.naissance.numeroRegistre">Numero Registre</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="mentionMarginale"><span jhiTranslate="etatCivilApp.naissance.mentionMarginale">Mention Marginale</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dateDeclaration"><span jhiTranslate="etatCivilApp.naissance.dateDeclaration">Date Declaration</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pere.prenom"><span jhiTranslate="etatCivilApp.naissance.pere">Pere</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="mere.prenom"><span jhiTranslate="etatCivilApp.naissance.mere">Mere</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="enfant.prenom"><span jhiTranslate="etatCivilApp.naissance.enfant">Enfant</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="agentDeclarant.login"><span jhiTranslate="etatCivilApp.naissance.agentDeclarant">Agent Declarant</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lieuDeclaration.nom"><span jhiTranslate="etatCivilApp.naissance.lieuDeclaration">Lieu Declaration</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let naissance of naissances ;trackBy: trackId">
+                <td><a [routerLink]="['../naissance', naissance.id ]">{{naissance.id}}</a></td>
+                <td>{{naissance.numeroRegistre}}</td>
+                <td>{{naissance.mentionMarginale}}</td>
+                <td>{{naissance.dateDeclaration | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="naissance.pere">
+                        <a [routerLink]="['../personne', naissance.pere?.id ]" >{{naissance.pere?.prenom}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="naissance.mere">
+                        <a [routerLink]="['../personne', naissance.mere?.id ]" >{{naissance.mere?.prenom}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="naissance.enfant">
+                        <a [routerLink]="['../personne', naissance.enfant?.id ]" >{{naissance.enfant?.prenom}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{naissance.agentDeclarant?.login}}
+                </td>
+                <td>
+                    <div *ngIf="naissance.lieuDeclaration">
+                        <a [routerLink]="['../ville', naissance.lieuDeclaration?.id ]" >{{naissance.lieuDeclaration?.nom}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../naissance', naissance.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'naissance/'+ naissance.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'naissance/'+ naissance.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

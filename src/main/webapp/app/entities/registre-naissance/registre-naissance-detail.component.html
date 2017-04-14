@@ -1,0 +1,35 @@
+
+<div *ngIf="registreNaissance">
+    <h2><span jhiTranslate="etatCivilApp.registreNaissance.detail.title">Registre Naissance</span> {{registreNaissance.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="etatCivilApp.registreNaissance.numero">Numero</span></dt>
+        <dd>
+            <span>{{registreNaissance.numero}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.registreNaissance.annee">Annee</span></dt>
+        <dd>
+            <span>{{registreNaissance.annee | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.registreNaissance.naissance">Naissance</span></dt>
+        <dd>
+            <div *ngIf="registreNaissance.naissance">
+                <a [routerLink]="['/naissance', registreNaissance.naissance?.id]">{{registreNaissance.naissance?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'registre-naissance/'+ registreNaissance.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

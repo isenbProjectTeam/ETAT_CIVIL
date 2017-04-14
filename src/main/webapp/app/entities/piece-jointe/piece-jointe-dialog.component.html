@@ -1,0 +1,62 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPieceJointeLabel" jhiTranslate="etatCivilApp.pieceJointe.home.createOrEditLabel">Create or edit a Piece Jointe</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!pieceJointe.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="pieceJointe.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="etatCivilApp.pieceJointe.nom" for="field_nom">Nom</label>
+            <div>
+                <div *ngIf="pieceJointe.nom" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(pieceJointe.nomContentType, pieceJointe.nom)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{pieceJointe.nomContentType}}, {{byteSize(pieceJointe.nom)}}</span>
+                    <button type="button" (click)="pieceJointe.nom=null;pieceJointe.nomContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" (change)="setFileData($event, pieceJointe, 'nom', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="nom" id="field_nom"
+                [(ngModel)]="pieceJointe.nom"
+            required />
+            <input type="hidden" class="form-control" name="nomContentType" id="field_nomContentType"
+                [(ngModel)]="pieceJointe.nomContentType" />
+            <div [hidden]="!(editForm.controls.nom?.dirty && editForm.controls.nom?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nom?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.pieceJointe.naissance" for="field_naissance">Naissance</label>
+            <select class="form-control" id="field_naissance" name="naissance" [(ngModel)]="pieceJointe.naissance"  required>
+                <option [ngValue]="naissanceOption.id === pieceJointe.naissance?.id ? pieceJointe.naissance : naissanceOption" *ngFor="let naissanceOption of naissances; trackBy: trackNaissanceById">{{naissanceOption.numeroRegistre}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.naissance?.dirty && editForm.controls.naissance?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.naissance?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

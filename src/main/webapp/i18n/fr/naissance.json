@@ -1,0 +1,29 @@
+{
+    "etatCivilApp": {
+        "naissance" : {
+            "home": {
+                "title": "Naissances",
+                "createLabel": "Créer un nouveau Naissance",
+                "createOrEditLabel": "Créer ou éditer un Naissance",
+                "search": "Recherche pour Naissance"
+            },
+            "created": "Un nouveau Naissance a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Naissance avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Naissance avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Naissance {{ id }} ?"
+            },
+            "detail": {
+                "title": "Naissance"
+            },
+            "numeroRegistre": "Numero Registre",
+            "mentionMarginale": "Mention Marginale",
+            "dateDeclaration": "Date Declaration",
+            "pere": "Pere",
+            "mere": "Mere",
+            "enfant": "Enfant",
+            "agentDeclarant": "Agent Declarant",
+            "lieuDeclaration": "Lieu Declaration"
+        }
+    }
+}

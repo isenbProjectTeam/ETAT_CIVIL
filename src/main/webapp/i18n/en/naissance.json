@@ -1,0 +1,29 @@
+{
+    "etatCivilApp": {
+        "naissance" : {
+            "home": {
+                "title": "Naissances",
+                "createLabel": "Create a new Naissance",
+                "createOrEditLabel": "Create or edit a Naissance",
+                "search": "Search for Naissance"
+            },
+            "created": "A new Naissance is created with identifier {{ param }}",
+            "updated": "A Naissance is updated with identifier {{ param }}",
+            "deleted": "A Naissance is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Naissance {{ id }}?"
+            },
+            "detail": {
+                "title": "Naissance"
+            },
+            "numeroRegistre": "Numero Registre",
+            "mentionMarginale": "Mention Marginale",
+            "dateDeclaration": "Date Declaration",
+            "pere": "Pere",
+            "mere": "Mere",
+            "enfant": "Enfant",
+            "agentDeclarant": "Agent Declarant",
+            "lieuDeclaration": "Lieu Declaration"
+        }
+    }
+}

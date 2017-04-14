@@ -9,9 +9,15 @@
     <include file="classpath:config/liquibase/changelog/20170414172937_added_entity_Ville.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170414174108_added_entity_Adresse.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170414174858_added_entity_Personne.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414190014_added_entity_Naissance.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414195846_added_entity_PieceJointe.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414202514_added_entity_RegistreNaissance.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170414172937_added_entity_constraints_Ville.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170414174108_added_entity_constraints_Adresse.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170414174858_added_entity_constraints_Personne.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414190014_added_entity_constraints_Naissance.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414195846_added_entity_constraints_PieceJointe.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170414202514_added_entity_constraints_RegistreNaissance.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

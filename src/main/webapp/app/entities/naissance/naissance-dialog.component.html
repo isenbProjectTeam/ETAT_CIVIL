@@ -1,0 +1,124 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myNaissanceLabel" jhiTranslate="etatCivilApp.naissance.home.createOrEditLabel">Create or edit a Naissance</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!naissance.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="naissance.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="etatCivilApp.naissance.numeroRegistre" for="field_numeroRegistre">Numero Registre</label>
+            <input type="text" class="form-control" name="numeroRegistre" id="field_numeroRegistre"
+                [(ngModel)]="naissance.numeroRegistre"
+            required />
+            <div [hidden]="!(editForm.controls.numeroRegistre?.dirty && editForm.controls.numeroRegistre?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.numeroRegistre?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="etatCivilApp.naissance.mentionMarginale" for="field_mentionMarginale">Mention Marginale</label>
+            <textarea class="form-control" name="mentionMarginale" id="field_mentionMarginale"
+                [(ngModel)]="naissance.mentionMarginale" required ></textarea>
+            <div [hidden]="!(editForm.controls.mentionMarginale?.dirty && editForm.controls.mentionMarginale?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.mentionMarginale?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="etatCivilApp.naissance.dateDeclaration" for="field_dateDeclaration">Date Declaration</label>
+            <div class="input-group">
+                <input id="field_dateDeclaration" type="text" class="form-control" name="dateDeclaration" ngbDatepicker  #dateDeclarationDp="ngbDatepicker" [(ngModel)]="naissance.dateDeclaration"
+                required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="dateDeclarationDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+            <div [hidden]="!(editForm.controls.dateDeclaration?.dirty && editForm.controls.dateDeclaration?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.dateDeclaration?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.naissance.pere" for="field_pere">Pere</label>
+            <select class="form-control" id="field_pere" name="pere" [(ngModel)]="naissance.pere"  required>
+                <option [ngValue]="personneOption.id === naissance.pere?.id ? naissance.pere : personneOption" *ngFor="let personneOption of personnes; trackBy: trackPersonneById">{{personneOption.prenom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.pere?.dirty && editForm.controls.pere?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.pere?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.naissance.mere" for="field_mere">Mere</label>
+            <select class="form-control" id="field_mere" name="mere" [(ngModel)]="naissance.mere"  required>
+                <option [ngValue]="personneOption.id === naissance.mere?.id ? naissance.mere : personneOption" *ngFor="let personneOption of personnes; trackBy: trackPersonneById">{{personneOption.prenom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.mere?.dirty && editForm.controls.mere?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.mere?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.naissance.enfant" for="field_enfant">Enfant</label>
+            <select class="form-control" id="field_enfant" name="enfant" [(ngModel)]="naissance.enfant"  required>
+                <option [ngValue]="personneOption.id === naissance.enfant?.id ? naissance.enfant : personneOption" *ngFor="let personneOption of personnes; trackBy: trackPersonneById">{{personneOption.prenom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.enfant?.dirty && editForm.controls.enfant?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.enfant?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.naissance.agentDeclarant" for="field_agentDeclarant">Agent Declarant</label>
+            <select class="form-control" id="field_agentDeclarant" name="agentDeclarant" [(ngModel)]="naissance.agentDeclarant"  required>
+                <option [ngValue]="userOption.id === naissance.agentDeclarant?.id ? naissance.agentDeclarant : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.agentDeclarant?.dirty && editForm.controls.agentDeclarant?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.agentDeclarant?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.naissance.lieuDeclaration" for="field_lieuDeclaration">Lieu Declaration</label>
+            <select class="form-control" id="field_lieuDeclaration" name="lieuDeclaration" [(ngModel)]="naissance.lieuDeclaration"  required>
+                <option [ngValue]="villeOption.id === naissance.lieuDeclaration?.id ? naissance.lieuDeclaration : villeOption" *ngFor="let villeOption of villes; trackBy: trackVilleById">{{villeOption.nom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.lieuDeclaration?.dirty && editForm.controls.lieuDeclaration?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.lieuDeclaration?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
