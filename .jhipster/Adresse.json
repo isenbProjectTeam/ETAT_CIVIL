@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "ville",
+            "otherEntityName": "ville",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nom"
+        },
+        {
+            "relationshipName": "pays",
+            "otherEntityName": "pays",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nom"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "rue",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170414174108",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "adresse",
+    "pagination": "infinite-scroll"
+}

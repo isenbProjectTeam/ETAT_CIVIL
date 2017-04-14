@@ -9,6 +9,7 @@
                 "main": "Entités",
                 "pays": "Pays",
                 "ville": "Ville",
+                "adresse": "Adresse",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

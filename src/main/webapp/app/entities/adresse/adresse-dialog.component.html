@@ -1,0 +1,61 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myAdresseLabel" jhiTranslate="etatCivilApp.adresse.home.createOrEditLabel">Create or edit a Adresse</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!adresse.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="adresse.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="etatCivilApp.adresse.rue" for="field_rue">Rue</label>
+            <input type="text" class="form-control" name="rue" id="field_rue"
+                [(ngModel)]="adresse.rue"
+            required />
+            <div [hidden]="!(editForm.controls.rue?.dirty && editForm.controls.rue?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.rue?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.adresse.ville" for="field_ville">Ville</label>
+            <select class="form-control" id="field_ville" name="ville" [(ngModel)]="adresse.ville"  required>
+                <option [ngValue]="villeOption.id === adresse.ville?.id ? adresse.ville : villeOption" *ngFor="let villeOption of villes; trackBy: trackVilleById">{{villeOption.nom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.ville?.dirty && editForm.controls.ville?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.ville?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="etatCivilApp.adresse.pays" for="field_pays">Pays</label>
+            <select class="form-control" id="field_pays" name="pays" [(ngModel)]="adresse.pays"  required>
+                <option [ngValue]="paysOption.id === adresse.pays?.id ? adresse.pays : paysOption" *ngFor="let paysOption of pays; trackBy: trackPaysById">{{paysOption.nom}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.pays?.dirty && editForm.controls.pays?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.pays?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

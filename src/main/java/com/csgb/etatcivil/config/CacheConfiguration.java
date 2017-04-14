@@ -44,6 +44,8 @@ public class CacheConfiguration {
             cm.createCache(com.csgb.etatcivil.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
             cm.createCache(com.csgb.etatcivil.domain.Pays.class.getName(), jcacheConfiguration);
             cm.createCache(com.csgb.etatcivil.domain.Ville.class.getName(), jcacheConfiguration);
+            cm.createCache(com.csgb.etatcivil.domain.Adresse.class.getName(), jcacheConfiguration);
+            cm.createCache(com.csgb.etatcivil.domain.Adresse.class.getName() + ".pays", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

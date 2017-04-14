@@ -1,0 +1,24 @@
+{
+    "etatCivilApp": {
+        "adresse" : {
+            "home": {
+                "title": "Adresses",
+                "createLabel": "Créer un nouveau Adresse",
+                "createOrEditLabel": "Créer ou éditer un Adresse",
+                "search": "Recherche pour Adresse"
+            },
+            "created": "Un nouveau Adresse a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Adresse avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Adresse avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Adresse {{ id }} ?"
+            },
+            "detail": {
+                "title": "Adresse"
+            },
+            "rue": "Rue",
+            "ville": "Ville",
+            "pays": "Pays"
+        }
+    }
+}
