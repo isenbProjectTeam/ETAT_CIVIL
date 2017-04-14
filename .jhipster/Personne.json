@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nom",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "prenom",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "genre",
+            "fieldType": "Genre",
+            "fieldValues": "Masculin,Feminin",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fonction",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170414174858",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "personne",
+    "pagination": "infinite-scroll"
+}

@@ -1,0 +1,37 @@
+
+<div *ngIf="personne">
+    <h2><span jhiTranslate="etatCivilApp.personne.detail.title">Personne</span> {{personne.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="etatCivilApp.personne.nom">Nom</span></dt>
+        <dd>
+            <span>{{personne.nom}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.personne.prenom">Prenom</span></dt>
+        <dd>
+            <span>{{personne.prenom}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.personne.genre">Genre</span></dt>
+        <dd>
+            <span jhiTranslate="{{'etatCivilApp.Genre.' + personne.genre}}">{{personne.genre}}</span>
+        </dd>
+        <dt><span jhiTranslate="etatCivilApp.personne.fonction">Fonction</span></dt>
+        <dd>
+            <span>{{personne.fonction}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'personne/'+ personne.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
